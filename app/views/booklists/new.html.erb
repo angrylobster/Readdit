@@ -4,7 +4,7 @@
 <%= form_with scope: :booklist, url: booklists_path, local: true do |form| %>
 
 
-	<%= form.collection_select :user_id, @users, :id, :email %>
+	<%= form.hidden_field :user_id, value: current_user.id %>
   <%= form.collection_check_boxes :book_ids, @books, :id, :title %>
 
   <p>

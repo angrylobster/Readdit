@@ -1,15 +1,18 @@
-<h2> Books </h2>
 
-<%= form_tag search_books_path, :method => :get do %>
-
-  <%= text_field_tag :query, params[:query] %> <%= submit_tag "Search!" %>
-
-<% end %>
 
 <div class="row d-flex justify-content-center">
+	<div class="col-9">
 
-	<div class="col-8">
+		<h2> Books </h2>
 
+		<div>
+			<%= form_tag search_books_path, :method => :get do %>
+	  		<%= text_field_tag :query, params[:query] %> <%= submit_tag "Search!" %>
+			<% end %>
+		</div>
+
+		<br>
+		<br>
 		<%= link_to 'New Book', new_book_path %>
 		<br>
 		<br>
@@ -26,9 +29,25 @@
 					</div>
 			</div>
 		</a>
+
+		<%= form_with scope: :booklist, url: booklists_path, local: true do |form| %>
+
+			<p>
+				<%= form.label :booklist_type %><br>
+				<%= form.text_area :booklist_type %>
+  		</p>
+		 	<p>
+				<%= form.hidden_field :user_id, value: current_user.id %>
+				<%= form.hidden_field :book_ids, value: book.id %>
+			</p>
+		 	<p>
+				<%= form.submit %>
+			</p>
+			<% end %>
+
 		<% end %>
 
-			<%= will_paginate @books %>
+	<%= will_paginate @books %>
 
 	</div>
 </div>

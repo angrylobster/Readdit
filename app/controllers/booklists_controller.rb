@@ -6,7 +6,6 @@ class BooklistsController < ApplicationController
     @booklists = Booklist.all
     @users = User.all
 
-
   end
 
   def new
@@ -25,10 +24,13 @@ class BooklistsController < ApplicationController
   def create
     @booklist = Booklist.new(book_params)
 
+    p "ARE YOU HERE?"
+    p @booklist
+
     if @booklist.save
-      redirect_to booklists_path
+      redirect_to books_path
     else
-      render plain: 'booklist not added created'
+      render plain: 'Book not added to list'
     end
   end
 
@@ -56,6 +58,6 @@ class BooklistsController < ApplicationController
 private
 
   def book_params
-    params.require(:booklist).permit(:user_id, :type, :book_ids =>[])
+    params.require(:booklist).permit(:user_id, :booklist_type, :book_ids =>[])
   end
 end

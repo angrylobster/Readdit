@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!#, :except => [ :show, :index ]
 
   def index
-
+    @reviews = Review.all
     if request.query_parameters[:sort] == "rating"
       @reviews = Review.order(rating: :desc)
     elsif request.query_parameters[:sort] == "desc"
