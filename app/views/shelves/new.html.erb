@@ -1,0 +1,14 @@
+<%= form_with scope: :shelf, url: shelves_path, local: true do |form| %>
+
+<%= form.label :name %><br>
+<%= form.text_field :name %>
+
+<p>
+	<%= form.collection_select :book_id, @books, :id, :title %>
+</p>
+
+<%= form.hidden_field :user_id, value: @user.id %>
+
+<%= form.submit %>
+
+<% end %>

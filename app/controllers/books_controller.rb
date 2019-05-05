@@ -3,15 +3,25 @@ class BooksController < ApplicationController
   before_action :authenticate_user!#, :except => [ :show, :index ]
 
   def index
-    @books = Book.paginate(:page => params[:page])
-    @users = User.all
-
-
+    # test to see if we are at /shelves/:id/books or /books
+    if params.has_key?(:shelf_id)
+      # get all the rangers for a specific park
+      @books = Book.where(shelf_id: params[:shelf_id] )
+    else
+      # get All books
+      @books = Book.paginate(:page => params[:page])
+      @users = User.all
+    end
   end
 
   def new
+    # test to see if we are at /shelves/:id/books/new or /books/new..
+    if params.has_key?(:shelf_id)
+      # get all the rangers for a specific park
+      @books = Book.where(shelf_id: params[:shelf_id] )
+    else
     @users = User.all
-
+    @shelves = Shelf.all
   end
 
   def edit
@@ -55,7 +65,7 @@ class BooksController < ApplicationController
 private
 
   def book_params
-    params.require(:book).permit(:title, :author, :image_url)
+    params.require(:book).permit(:title, :author, :image_url, :shelf_ids => [])
   end
 
 end

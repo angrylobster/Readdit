@@ -1,26 +1,56 @@
-<%= @users[0].id %>
+<% if params.has_key?(:shelf_id) %>
+<h1>Add Book to Shelf <%= params[:shelf_id] %></h1>
+	<%= form_with scope: :book, url: shelf_books_path(params[:shelf_id]), local: true do |form| %>
 
+		<p>
+			<%= form.label :title %><br>
+			<%= form.text_area :title %>
+	  </p>
 
-<%= form_with scope: :book, url: books_path, local: true do |form| %>
+	  <p>
+			<%= form.label :author %><br>
+			<%= form.text_field :author %>
+	  </p>
 
-  <p>
-	<%= form.label :title %><br>
-	<%= form.text_area :title %>
-  </p>
+	  <p>
+			<%= form.label :image_url %><br>
+			<%= form.text_field :image_url %>
+	  </p>
 
-  <p>
-	<%= form.label :author %><br>
-	<%= form.text_field :author %>
-  </p>
+	  <!-- pending  -->
+	  <!-- <%= form.hidden_field :shelf_ids, value: @book.id %> -->
 
-  <p>
-	<%= form.label :image_url %><br>
-	<%= form.text_field :image_url %>
-  </p>
+	  <p>
+			<%= form.submit %>
+	  </p>
 
-  <p>
-	<%= form.submit %>
-  </p>
+	<% end %>
+
+<% else %>
+
+	<%= form_with scope: :book, url: books_path, local: true do |form| %>
+
+	  <p>
+		<%= form.label :title %><br>
+		<%= form.text_area :title %>
+	  </p>
+
+	  <p>
+		<%= form.label :author %><br>
+		<%= form.text_field :author %>
+	  </p>
+
+	  <p>
+		<%= form.label :image_url %><br>
+		<%= form.text_field :image_url %>
+	  </p>
+
+	  <p>
+		<%= form.submit %>
+	  </p>
+
+<% end %>
+
 <% end %>
 
 <%= link_to 'Go back to Book index', root_path %>
