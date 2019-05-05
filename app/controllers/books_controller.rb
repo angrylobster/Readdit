@@ -6,7 +6,10 @@ class BooksController < ApplicationController
     @books = Book.paginate(:page => params[:page])
     @users = User.all
 
-
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @books }
+    end
   end
 
   def new
@@ -40,8 +43,6 @@ class BooksController < ApplicationController
 
   def destroy
     @book = Book.find(params[:id])
-    p "hello"
-    p @book
     @book.destroy
 
     redirect_to root_path
@@ -50,6 +51,23 @@ class BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
 
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @book }
+    end
+  end
+
+  # GET /books/search
+  # GET /books/search.xml
+  def search
+    @books = Book.search do
+      keywords params[:query]
+    end.results
+
+    respond_to do |format|
+      format.html { render :action => "index" }
+      format.xml  { render :xml => @books }
+    end
   end
 
 private
