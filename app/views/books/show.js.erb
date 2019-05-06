@@ -1,0 +1,12 @@
+$("#target-for-change").html("<%= j render(partial: 'show') %>");
+
+
+$("<%= j render(partial: 'show') %>").appendTo("#search-bar-form");
+
+//
+
+$("#search-bar-form").on( "click", function() {
+  alert('Number <%= params[:id] %>');  // jQuery 1.7+
+});
+
+alert('Number <%= params[:id] %>')

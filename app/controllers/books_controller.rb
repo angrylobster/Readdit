@@ -1,28 +1,23 @@
 class BooksController < ApplicationController
-
+  protect_from_forgery except: :index
   before_action :authenticate_user!#, :except => [ :show, :index ]
 
   def index
 
+    if params[:title]
+      stringSearch = params[:title].capitalize
+      @books = Book.where(["title LIKE ? ", "%#{stringSearch}%"]);
+      @books = @books.paginate(:page => params[:page])
+      @users = User.all
+      @stuffs = @books[1..3]
+      p @stuffs
 
-    ####
-
-  if params[:title]
-
-    p "here in params"
-
-    stringSearch = params[:title].capitalize
-
-    @books = Book.where(["title LIKE ? ", "%#{stringSearch}%"]);
-
-    p @books;
-    @books = @books.paginate(:page => params[:page])
-
-    @users = User.all
-  else
-    @books = Book.paginate(:page => params[:page])
-    @users = User.all
-  end
+    else
+      @books = Book.paginate(:page => params[:page])
+      @users = User.all
+      @stuffs = @books[1..3]
+      p @stuffs
+    end
 
   end
 
@@ -65,6 +60,8 @@ class BooksController < ApplicationController
   end
 
   def show
+    # @book = Book.find(params[:id])
+
     @book = Book.find(params[:id])
 
   end

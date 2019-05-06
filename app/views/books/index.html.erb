@@ -1,10 +1,22 @@
 <h2> Books </h2>
 
-<%= form_tag books_path, :method => :get do %>
-   <%= text_field_tag :title, params[:title] %>
-  <%= submit_tag 'Search', name: nil %>
-<% end %>
+<div>
+	<%= form_tag books_path, :method => :get do%>
+	<input id="search-bar-form" class="search-form" name="title" placeholder="Search Book Titles" type="text" autocomplete="on">
+  <button class="btn btn-primary" type="submit">Search</button>
+	<% end %>
+</div>
 
+<br>
+<%= link_to 'Stuff is about to happen', book_path(2), remote: true %>
+<br>
+
+<div id="target-for-change">
+  Now you see "ME"!
+</div>
+
+
+<br>
 
 <div class="row d-flex justify-content-center">
 
